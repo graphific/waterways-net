@@ -1,0 +1,97 @@
+[gd_scene load_steps=11 format=3 uid="uid://drq354hj1pwkx"]
+
+[ext_resource type="Script" uid="uid://8vyuhyx0xogt" path="res://addons/freecam_3D/freecam.gd" id="1_pbyeh"]
+[ext_resource type="Script" uid="uid://ydae61qoknqf" path="res://addons/waterways_net/RiverManager.cs" id="1_river"]
+[ext_resource type="Script" uid="uid://bwku0jatw6wjc" path="res://TestAssets/Scripts/Test01_AddPoint.cs" id="2_test"]
+[ext_resource type="Script" uid="uid://t8ukosken3af" path="res://addons/waterways_net/Data/RiverShaderSettings.cs" id="3_shader"]
+[ext_resource type="Texture2D" uid="uid://b85tlq8wcklbo" path="res://addons/waterways_net/Textures/water_normal_bump.png" id="4_texture"]
+[ext_resource type="Script" uid="uid://ss14x1uldfio" path="res://addons/waterways_net/RiverFloatSystem.cs" id="5_float"]
+[ext_resource type="Script" uid="uid://svn1oolwgxkg" path="res://TestAssets/Scripts/FloatSpawner.cs" id="6_spawner"]
+[ext_resource type="PackedScene" uid="uid://bn4fflqma5nvj" path="res://TestAssets/floating_cube.tscn" id="7_cube"]
+
+[sub_resource type="Resource" id="Resource_6w6th"]
+script = ExtResource("3_shader")
+MatShaderType = 1
+mat_albedo_color_first = Color(0.4, 0.6, 0.8, 1)
+mat_albedo_color_second = Color(0.1, 0.3, 0.5, 1)
+mat_albedo_depth = 3.0
+mat_albedo_depth_curve = 0.25
+mat_transparency_clarity = 10.0
+mat_transparency_depth_curve = 0.25
+mat_transparency_refraction = 0.05
+mat_normal_scale = 1.0
+mat_normal_bump_texture = ExtResource("4_texture")
+mat_flow_speed = 0.5
+mat_flow_base = 0.0
+mat_flow_steepness = 2.0
+mat_flow_distance = 1.0
+mat_flow_pressure = 1.0
+mat_flow_max = 4.0
+mat_flow_direction = Vector2(1, 1)
+mat_foam_color = Color(0.9, 0.9, 0.9, 1)
+mat_foam_amount = 2.0
+mat_foam_steepness = 2.0
+mat_foam_smoothness = 0.3
+mat_uv_scale = Vector3(1, 1, 1)
+mat_roughness = 0.2
+mat_edge_fade = 0.25
+LodLod0Distance = 50.0
+_selectedShader = 1
+
+[sub_resource type="Curve3D" id="Curve3D_fy522"]
+resource_local_to_scene = true
+bake_interval = 0.05
+_data = {
+"points": PackedVector3Array(0, 0, -0.25, 0, 0, 0.25, 0, 0, 0, 0, 0, -0.25, 0, 0, 0.25, 0, 0, 1),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[node name="Test01_AddPoint" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 15, 20)
+current = true
+script = ExtResource("1_pbyeh")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 20, 0)
+light_energy = 0.8
+
+[node name="RiverManager" type="Node3D" parent="."]
+script = ExtResource("1_river")
+ShaderSettings = SubResource("Resource_6w6th")
+Curve = SubResource("Curve3D_fy522")
+
+[node name="RiverFloatSystem" type="Node3D" parent="RiverManager"]
+script = ExtResource("5_float")
+
+[node name="FloatSpawner" type="Node3D" parent="RiverManager" node_paths=PackedStringArray("FloatSystem")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 3, 0.38397098)
+script = ExtResource("6_spawner")
+SpawnScene = ExtResource("7_cube")
+FloatSystem = NodePath("../RiverFloatSystem")
+
+[node name="TestController" type="Node3D" parent="." node_paths=PackedStringArray("River")]
+script = ExtResource("2_test")
+River = NodePath("../RiverManager")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Instructions" type="Label" parent="UI"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 400.0
+offset_bottom = 150.0
+text = "TEST 1: Add Point at Runtime
+
+Controls:
+  E - Add point to end of river
+  SHIFT+E - Add point to start
+  Q - Increase width (wider)
+  A - Decrease width (narrower)
+  R - Reset river
+  SPACE - Spawn floating cube
+  TAB - Toggle freecam
+
+Watch the console for debug output!"

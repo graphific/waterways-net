@@ -394,3 +394,5 @@ transform = Transform3D(-1.55289, 0.535772, 1.02757, -1.1586, -0.681639, -1.3955
 
 [node name="rock5" parent="Clutter/Boulders" instance=ExtResource("10_ia66j")]
 transform = Transform3D(-1.55289, 0.535772, 1.02757, -1.1586, -0.681639, -1.3955, -0.024378, -1.73284, 0.866654, -10.894, 33.2029, -7.39029)
+
+[node name="PointSpawner" type="Node3D" parent="."]

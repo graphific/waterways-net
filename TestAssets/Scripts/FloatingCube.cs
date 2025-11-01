@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 
 namespace Waterways.Scripts;
 
@@ -10,8 +10,8 @@ public partial class FloatingCube : RigidBody3D
     [Export] public RiverFloatSystem FloatSystem { get; set; }
     [Export] public float MaxEffectiveDepth { get; set; } = 2;
     [Export] public float WaterHeightOffset { get; set; } = 0.7f;
-    [Export] public float FloatForce { get; set; } = 12;
-    [Export] public float FlowForce { get; set; } = 100;
+    [Export] public float FloatForce { get; set; } = 20; // Increased from 12 for more buoyancy
+    [Export] public float FlowForce { get; set; } = 30; // Reduced from 100 for less dominance
     [Export] public float WaterDrag { get; set; } = 0.05f;
     [Export] public float WaterAngularDrag { get; set; } = 0.05f;
 
@@ -22,18 +22,28 @@ public partial class FloatingCube : RigidBody3D
             return;
         }
 
-        var depth = FloatSystem.GetWaterHeight(GlobalPosition) + WaterHeightOffset - GlobalPosition.Y;
+        var waterHeight = FloatSystem.GetWaterHeight(GlobalPosition);
+        var depth = waterHeight + WaterHeightOffset - GlobalPosition.Y;
         depth = Mathf.Clamp(depth, -1, MaxEffectiveDepth);
 
-        if (depth <= 0)
+        // Only apply forces if we're actually in water (not at default height)
+        if (depth <= 0 || waterHeight == FloatSystem.DefaultHeight)
         {
             return;
         }
 
         var gravity = Gravity * GravityScale;
-        var floatForce = (Vector3.Up * gravity * depth * FloatForce) + (FloatSystem.GetWaterFlowDirection(GlobalPosition) * FlowForce);
-        state.ApplyForce(floatForce);
 
+        // Buoyancy force (vertical)
+        var buoyancyForce = Vector3.Up * gravity * depth * FloatForce;
+
+        // Flow force (horizontal) - only apply if significantly in water
+        var flowDirection = FloatSystem.GetWaterFlowDirection(GlobalPosition);
+        var flowForceVec = flowDirection * FlowForce * depth / MaxEffectiveDepth; // Scale by depth
+
+        state.ApplyForce(buoyancyForce + flowForceVec);
+
+        // Apply drag only when in water
         state.LinearVelocity *= 1 - WaterDrag;
         state.AngularVelocity *= 1 - WaterAngularDrag;
     }
