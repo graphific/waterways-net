@@ -89,5 +89,63 @@ public partial class HillyTerrain : MeshInstance3D
             Roughness = 1.0f
         };
         MaterialOverride = material;
+
+        // Generate collision mesh for raycasting
+        GenerateCollisionMesh();
+    }
+
+    private void GenerateCollisionMesh()
+    {
+        // Check if we're a child of a StaticBody3D
+        var parent = GetParent();
+        if (parent is not StaticBody3D staticBody)
+        {
+            GD.PrintErr($"HillyTerrain '{Name}' must be a child of StaticBody3D for collision to work!");
+            return;
+        }
+
+        // Remove any existing collision shapes from parent
+        foreach (var child in staticBody.GetChildren())
+        {
+            if (child is CollisionShape3D)
+            {
+                child.QueueFree();
+            }
+        }
+
+        // Create trimesh collision from our mesh
+        if (Mesh == null)
+        {
+            GD.PrintErr("Cannot create collision - Mesh is null!");
+            return;
+        }
+
+        CreateTrimeshCollision();
+
+        // The CreateTrimeshCollision() method adds the CollisionShape3D as a child of this MeshInstance3D
+        // We need to move it to the StaticBody3D parent
+        CollisionShape3D collisionShape = null;
+        foreach (var child in GetChildren())
+        {
+            if (child is CollisionShape3D cs)
+            {
+                collisionShape = cs;
+                break;
+            }
+        }
+
+        if (collisionShape != null)
+        {
+            // Move the collision shape to the parent StaticBody3D
+            RemoveChild(collisionShape);
+            staticBody.AddChild(collisionShape);
+            collisionShape.Owner = staticBody.Owner; // Preserve scene ownership
+
+            GD.Print($"✓ Generated trimesh collision for '{Name}'");
+        }
+        else
+        {
+            GD.PrintErr("Failed to create trimesh collision shape!");
+        }
     }
 }
