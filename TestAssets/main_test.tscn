@@ -1,9 +1,9 @@
 [gd_scene load_steps=42 format=3 uid="uid://pgvwvu6wke6p"]
 
-[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="1_c2hoe"]
+[ext_resource type="Script" uid="uid://qpv3lm4cjo5e" path="res://addons/zylann.hterrain/hterrain.gd" id="1_c2hoe"]
 [ext_resource type="Environment" uid="uid://cim0252dprrrv" path="res://TestAssets/default_env.tres" id="1_i3f35"]
-[ext_resource type="Resource" path="res://TestAssets/Terrain/data.hterrain" id="2_juqy4"]
-[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="3_84qpo"]
+[ext_resource type="Resource" uid="uid://daodk5xthfpfi" path="res://TestAssets/Terrain/data.hterrain" id="2_juqy4"]
+[ext_resource type="Script" uid="uid://bki6qf0elbiq7" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="3_84qpo"]
 [ext_resource type="Texture2D" uid="uid://k8lt88ugpbm8" path="res://TestAssets/Terrain/Textures/grass_alb_bump.png" id="4_3arg6"]
 [ext_resource type="Texture2D" uid="uid://13thf406otb8" path="res://TestAssets/Terrain/Textures/dirt_alb_bump.png" id="5_ba170"]
 [ext_resource type="Texture2D" uid="uid://bwl0ymoej6jwx" path="res://TestAssets/Terrain/Textures/riverbed_alb_bump.png" id="6_npdy2"]
@@ -11,17 +11,17 @@
 [ext_resource type="Texture2D" uid="uid://k4brb2w6y37u" path="res://TestAssets/Terrain/Textures/dirt_nor_rough.png" id="8_jy01s"]
 [ext_resource type="Texture2D" uid="uid://nw61drbjop33" path="res://TestAssets/Terrain/Textures/riverbed_nor_rough.png" id="9_kichf"]
 [ext_resource type="PackedScene" uid="uid://cyq12ycnotl2x" path="res://TestAssets/rock.tscn" id="10_ia66j"]
-[ext_resource type="Script" path="res://TestAssets/Scripts/FloatSpawner.cs" id="11_6teed"]
+[ext_resource type="Script" uid="uid://svn1oolwgxkg" path="res://TestAssets/Scripts/FloatSpawner.cs" id="11_6teed"]
 [ext_resource type="ArrayMesh" uid="uid://yq6tp386v4i2" path="res://TestAssets/Model/rock.obj" id="11_34ive"]
 [ext_resource type="PackedScene" uid="uid://bn4fflqma5nvj" path="res://TestAssets/floating_cube.tscn" id="12_0hd0b"]
 [ext_resource type="Texture2D" uid="uid://cmgf3jwbnhxlg" path="res://TestAssets/Model/rock_albedo.png" id="12_0ug2n"]
-[ext_resource type="Script" path="res://TestAssets/Scripts/ObjectDestroyer.cs" id="12_hqmh7"]
-[ext_resource type="Script" path="res://addons/waterways_net/RiverManager.cs" id="13_dg81e"]
+[ext_resource type="Script" uid="uid://er8qrq7pbtkf" path="res://TestAssets/Scripts/ObjectDestroyer.cs" id="12_hqmh7"]
+[ext_resource type="Script" uid="uid://ydae61qoknqf" path="res://addons/waterways_net/RiverManager.cs" id="13_dg81e"]
 [ext_resource type="Texture2D" uid="uid://cphlqcmoq01x5" path="res://TestAssets/Model/rock_normal.png" id="13_lye7l"]
 [ext_resource type="Texture2D" uid="uid://b85tlq8wcklbo" path="res://addons/waterways_net/Textures/water_normal_bump.png" id="14_mycmf"]
 [ext_resource type="Texture2D" uid="uid://cm8p03icrdab7" path="res://TestAssets/Model/rock_orm.png" id="14_y08bg"]
-[ext_resource type="Script" path="res://addons/waterways_net/Data/RiverShaderSettings.cs" id="15_pphx5"]
-[ext_resource type="Script" path="res://addons/waterways_net/RiverFloatSystem.cs" id="21_cu1h3"]
+[ext_resource type="Script" uid="uid://t8ukosken3af" path="res://addons/waterways_net/Data/RiverShaderSettings.cs" id="15_pphx5"]
+[ext_resource type="Script" uid="uid://ss14x1uldfio" path="res://addons/waterways_net/RiverFloatSystem.cs" id="21_cu1h3"]
 [ext_resource type="Shader" uid="uid://bfqfcsvkr48kx" path="res://TestAssets/Shaders/water_splash.tres" id="22_1nyol"]
 [ext_resource type="Texture2D" uid="uid://cn7v0tyc6r0w2" path="res://TestAssets/Shaders/splash_01.png" id="23_udqqw"]
 
@@ -32,7 +32,7 @@ script = ExtResource("3_84qpo")
 mode = 0
 textures = [[ExtResource("4_3arg6"), ExtResource("5_ba170"), ExtResource("6_npdy2")], [ExtResource("7_5uvfw"), ExtResource("8_jy01s"), ExtResource("9_kichf")]]
 
-[sub_resource type="Resource" id="Resource_2i3e2"]
+[sub_resource type="Resource" id="Resource_6vx7v"]
 script = ExtResource("15_pphx5")
 MatShaderType = 1
 mat_albedo_color_first = Color(0.376102, 0.404822, 0.50257, 1)
@@ -50,6 +50,7 @@ mat_flow_steepness = 5.0
 mat_flow_distance = 1.0
 mat_flow_pressure = 1.0
 mat_flow_max = 4.0
+mat_flow_direction = Vector2(1, 1)
 mat_foam_color = Color(0.793429, 0.818541, 0.872368, 1)
 mat_foam_amount = 2.0
 mat_foam_steepness = 2.0
@@ -60,7 +61,7 @@ mat_edge_fade = 0.25
 LodLod0Distance = 50.0
 _selectedShader = 1
 
-[sub_resource type="Curve3D" id="Curve3D_v1n6a"]
+[sub_resource type="Curve3D" id="Curve3D_3epyq"]
 resource_local_to_scene = true
 bake_interval = 0.05
 _data = {
@@ -72,7 +73,7 @@ point_count = 9
 [sub_resource type="BoxShape3D" id="12"]
 size = Vector3(11.484, 6.85648, 7.49257)
 
-[sub_resource type="Resource" id="Resource_hcpjo"]
+[sub_resource type="Resource" id="Resource_gdmk8"]
 script = ExtResource("15_pphx5")
 MatShaderType = 1
 mat_albedo_color_first = Color(0.199068, 0.216831, 0.280952, 1)
@@ -90,6 +91,7 @@ mat_flow_steepness = 4.0
 mat_flow_distance = 1.0
 mat_flow_pressure = 4.0
 mat_flow_max = 5.0
+mat_flow_direction = Vector2(1, 1)
 mat_foam_color = Color(0.825629, 0.881875, 0.846203, 1)
 mat_foam_amount = 1.5
 mat_foam_steepness = 1.3
@@ -100,7 +102,7 @@ mat_edge_fade = 1.0
 LodLod0Distance = 50.0
 _selectedShader = 1
 
-[sub_resource type="Curve3D" id="Curve3D_ky46n"]
+[sub_resource type="Curve3D" id="Curve3D_ei2jw"]
 resource_local_to_scene = true
 bake_interval = 0.05
 _data = {
@@ -112,12 +114,12 @@ point_count = 4
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5716f"]
 render_priority = 0
 shader = ExtResource("22_1nyol")
+shader_parameter/ParticalTexture = ExtResource("23_udqqw")
 shader_parameter/DissolveSpeed = Vector2(0, 0)
 shader_parameter/DissolveAmount = 0.0
-shader_parameter/ParticalTexture = ExtResource("23_udqqw")
 
 [sub_resource type="Curve" id="Curve_8pi3w"]
-max_value = 2.0
+_limits = [0.0, 2.0, 0.0, 1.0]
 _data = [Vector2(0.550725, 2), 0.0, 0.0, 0, 0]
 point_count = 1
 
@@ -225,6 +227,7 @@ chunk_size = 32
 collision_enabled = true
 collision_layer = 1
 collision_mask = 1
+physics_material = null
 shader_type = "Classic4"
 custom_shader = null
 custom_globalmap_shader = null
@@ -236,16 +239,16 @@ shader_params/u_depth_blending = true
 shader_params/u_triplanar = true
 shader_params/u_tile_reduction = Vector4(1, 1, 0, 1)
 shader_params/u_globalmap_blend_start = 0.0
-shader_params/u_globalmap_blend_distance = null
+shader_params/u_globalmap_blend_distance = 0.0
 shader_params/u_colormap_opacity_per_texture = Vector4(1, 1, 1, 1)
 shader_params/u_specular = 0.5
 
 [node name="RiverManager" type="Node3D" parent="."]
 transform = Transform3D(-0.0584003, 0, -0.998293, 0, 1, 0, 0.998293, 0, -0.0584003, 0.452626, 33.1977, -7.67319)
 script = ExtResource("13_dg81e")
-ShaderSettings = SubResource("Resource_2i3e2")
-PointWidths = [6.33827, 7.97592, 7.08766, 5.21408, 7.80158, 6.03617, 6.81221, 7.42093, 6.06767]
-Curve = SubResource("Curve3D_v1n6a")
+ShaderSettings = SubResource("Resource_6vx7v")
+PointWidths = Array[float]([6.33827, 7.97592, 7.08766, 5.21408, 7.80158, 6.03617, 6.81221, 7.42093, 6.06767])
+Curve = SubResource("Curve3D_3epyq")
 
 [node name="RiverFloatSystem" type="Node3D" parent="RiverManager"]
 script = ExtResource("21_cu1h3")
@@ -272,10 +275,10 @@ shape = SubResource("12")
 [node name="RiverManagerWaterfall" type="Node3D" parent="."]
 transform = Transform3D(0.625964, 0, -0.779852, 0, 1, 0, 0.779852, 0, 0.625964, 44.5139, 58.5356, -31.4447)
 script = ExtResource("13_dg81e")
-ShaderSettings = SubResource("Resource_hcpjo")
+ShaderSettings = SubResource("Resource_gdmk8")
 ShapeStepLengthDivs = 1
-PointWidths = [5.83558, 7.46584, 9.01672, 8.41666]
-Curve = SubResource("Curve3D_ky46n")
+PointWidths = Array[float]([5.83558, 7.46584, 9.01672, 8.41666])
+Curve = SubResource("Curve3D_ei2jw")
 
 [node name="ParticlesDown" type="GPUParticles3D" parent="RiverManagerWaterfall"]
 transform = Transform3D(0.982117, 0, 0.188273, 0, 1, 0, -0.188273, 0, 0.982117, 5.43934, -22.7479, 15.2223)
